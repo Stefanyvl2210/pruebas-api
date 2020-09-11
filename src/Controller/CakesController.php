@@ -50,11 +50,7 @@ class CakesController extends AbstractController
         $json = json_decode($content, true);
 
         $entityManager = $this->getDoctrine()->getManager();
-        $cake = new Cakes();
-
-        $cake->setType($json['nombre']);
-        $cake->setPrice($json['precio']);
-        $cake->setNumPedido($json['numPedido']);
+        $cake = new Cakes($json['type'],$json['price']);
 
         // tell Doctrine you want to (eventually) save the Product (no queries yet)
         $entityManager->persist($cake);

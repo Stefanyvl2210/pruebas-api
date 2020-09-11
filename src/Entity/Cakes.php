@@ -26,16 +26,23 @@ class Cakes
      * @ORM\Column(type="float")
      */
     private $price;
-    
+
     /**
-     * @ORM\Column(type="integer")
+     * Cakes constructor.
+     * @param $type
+     * @param $price
      */
-    private $numPedido;
+    public function __construct($type=null, $price=null)
+    {
+        $this->type = $type;
+        $this->price = $price;
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
+
 
     public function getType(): ?string
     {
@@ -57,19 +64,6 @@ class Cakes
     public function setPrice(float $price): self
     {
         $this->price = $price;
-
-        return $this;
-    }
-    
-
-    public function getNumPedido(): ?int
-    {
-        return $this->numPedido;
-    }
-
-    public function setNumPedido(int $numPedido): self
-    {
-        $this->numPedido = $numPedido;
 
         return $this;
     }

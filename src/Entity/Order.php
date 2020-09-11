@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\PedidosRepository;
+use App\Repository\OrderRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=PedidosRepository::class)
+ * @ORM\Entity(repositoryClass=OrderRepository::class)
+ * @ORM\Table(name="`order`")
  */
-class Pedidos
+class Order
 {
     /**
      * @ORM\Id
@@ -20,21 +21,21 @@ class Pedidos
     /**
      * @ORM\Column(type="integer")
      */
-    private $cantCakes;
+    private $number;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCantCakes(): ?int
+    public function getNumber(): ?int
     {
-        return $this->cantCakes;
+        return $this->number;
     }
 
-    public function setCantCakes(int $cantCakes): self
+    public function setNumber(int $number): self
     {
-        $this->cantCakes = $cantCakes;
+        $this->number = $number;
 
         return $this;
     }
