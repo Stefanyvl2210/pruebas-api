@@ -10,6 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\SerializerInterface;
 
 
 class CakesController extends AbstractController
@@ -26,22 +27,23 @@ class CakesController extends AbstractController
     }
 
     /**
-     * @Route("/cakes", name="cakes",methods={"GET"})
-     * @param Request $request
+     * @Route("/cake/{id}", name="cake", methods={"GET"})
+     *  @param SerializerInterface $serializer
+     * @param $id
      * @return JsonResponse
      */
-    public function listCakes(Request $request)
+    public function listCakes(SerializerInterface  $serializer,$id)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $cake = new Cake();
 
-        return $this->json([
-            'cakes' => $cake
-        ]);
+        $cake = $entityManager->getRepository(Cake::class)->collection();
+        $response = $serializer->serialize($cake,'json');
+
+        return new JsonResponse(json_decode($response));
     }
 
     /**
-     * @Route("/addCake", name="create_cake", methods={"POST"})
+     * @Route("/cake", name="create_cake", methods={"POST"})
      * @param Request $request
      * @return JsonResponse
      */

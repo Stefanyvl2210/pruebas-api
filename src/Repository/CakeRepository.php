@@ -47,4 +47,10 @@ class CakeRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function collection(){
+        return $this->getEntityManager()
+                ->createQuery("select cake from App\Entity\Cake cake")
+                ->getResult();
+    }
 }

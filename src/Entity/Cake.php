@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\CakesRepository;
+use App\Repository\CakeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
