@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\OrderRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,6 +24,22 @@ class Order
      */
     private $number;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Cake", mappedBy="order")
+     */
+    private $cakes;
+
+    /**
+     * Order constructor.
+     * @param $number
+     */
+    public function __construct($number=null)
+    {
+        $this->number = $number;
+        $this->cakes = new ArrayCollection();
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -38,5 +55,9 @@ class Order
         $this->number = $number;
 
         return $this;
+    }
+
+    public function addCake(Cake $cake){
+        $this->cakes[] = $cake;
     }
 }

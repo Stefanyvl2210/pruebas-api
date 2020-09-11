@@ -2,7 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Cakes;
+use App\Entity\Cake;
+use App\Entity\Order;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,7 +33,7 @@ class CakesController extends AbstractController
     public function listCakes(Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $cake = new Cakes();
+        $cake = new Cake();
 
         return $this->json([
             'cakes' => $cake
@@ -50,8 +51,8 @@ class CakesController extends AbstractController
         $json = json_decode($content, true);
 
         $entityManager = $this->getDoctrine()->getManager();
-        $cake = new Cakes($json['type'],$json['price']);
-
+        $cake = new Cake($json['type'],$json['price']);
+        $cake->setOrder(new Order($json['order']));
         // tell Doctrine you want to (eventually) save the Product (no queries yet)
         $entityManager->persist($cake);
 

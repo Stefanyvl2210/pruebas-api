@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Cakes;
+use App\Entity\Cake;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Cakes|null find($id, $lockMode = null, $lockVersion = null)
- * @method Cakes|null findOneBy(array $criteria, array $orderBy = null)
- * @method Cakes[]    findAll()
- * @method Cakes[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Cake|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Cake|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Cake[]    findAll()
+ * @method Cake[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CakesRepository extends ServiceEntityRepository
+class CakeRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Cakes::class);
+        parent::__construct($registry, Cake::class);
     }
 
     // /**
-    //  * @return Cakes[] Returns an array of Cakes objects
+    //  * @return Cake[] Returns an array of Cake objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class CakesRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Cakes
+    public function findOneBySomeField($value): ?Cake
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')
