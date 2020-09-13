@@ -68,12 +68,12 @@ class Cake
         return $this->price;
     }
 
-    public function setPrice(float $price): self
+    public function setPrice($price): self
     {
         $this->price = $price;
-
-        return $this;
     }
+
+
 
     /**
      * @return mixed
@@ -91,5 +91,12 @@ class Cake
         $this->order = $order;
     }
 
+    public function update(array $json) : self
+    {
+        $this->type = (isset($json['type'])) ? $json['type'] : $this->type;
+        $this->price = (isset($json['price'])) ? $json['price'] : $this->price;
+
+        return $this;
+    }
 
 }

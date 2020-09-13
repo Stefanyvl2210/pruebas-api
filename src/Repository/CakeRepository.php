@@ -53,4 +53,14 @@ class CakeRepository extends ServiceEntityRepository
                 ->createQuery("select cake from App\Entity\Cake cake")
                 ->getResult();
     }
+    public function findCakeWithoutOrder($id){
+        return $this->getEntityManager()
+            ->createQuery('
+                SELECT cake.id, cake.type, cake.price
+                FROM App\Entity\Cake cake
+                WHERE cake.id =: identifier 
+            ')
+            ->setParameter('identifier', $id)
+            ->getResult();
+    }
 }

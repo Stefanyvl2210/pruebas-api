@@ -60,4 +60,9 @@ class Order
     public function addCake(Cake $cake){
         $this->cakes[] = $cake;
     }
+    public function update(array $json) : self
+    {
+        $this->number = (isset($json['number'])) ? $json['number'] : $this->number;
+        return $this;
+    }
 }
