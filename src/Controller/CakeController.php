@@ -16,7 +16,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 class CakeController extends AbstractController
 {
     /**
-     * @Route("/api/", name="index")
+     * @Route("/api/index", name="index")
      */
     public function index()
     {
@@ -48,6 +48,8 @@ class CakeController extends AbstractController
      */
     public function addCake(Request $request)
     {
+        dd($request->getUser());
+
         $content = $request->getContent();
         $json = json_decode($content,true);//when is true returns objects in array associative
 
