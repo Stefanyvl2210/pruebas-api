@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Cake;
 use App\Entity\Order;
+use App\Entity\OrderLine;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +24,7 @@ class OrderController extends AbstractController
         ]);
     }
     /**
-     * @Route("/order", name="list_orders", methods={"GET"})
+     * @Route("/api/order", name="list_orders", methods={"GET"})
      * @param SerializerInterface $serializer
      * @return JsonResponse
      */
@@ -31,14 +32,14 @@ class OrderController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
 
-        $order = $entityManager->getRepository(Order::class)->findAll();
-        $response = $serializer->serialize($order,'json');
+        $orders = $entityManager->getRepository(Order::class)->findAll();
+        $response = $serializer->serialize($orders,'json');
 
         return new JsonResponse(json_decode($response));
     }
 
     /**
-     * @Route("/order", name="create_order", methods={"POST"})
+     * @Route("/api/order", name="create_order", methods={"POST"})
      * @param Request $request
      * @return JsonResponse
      */
@@ -48,12 +49,15 @@ class OrderController extends AbstractController
         $json = json_decode($content, true);
 
         $entityManager = $this->getDoctrine()->getManager();
-        $order = new Order($json['number']);
-        // tell Doctrine you want to (eventually) save the Product (no queries yet)
+        $order = new Order();
         $entityManager->persist($order);
-
-        // actually executes the queries (i.e. the INSERT query)
         $entityManager->flush();
+        foreach ($json['lines'] as $line){
+            $newOrderLine = new OrderLine($line['cake_id'],$order->getId(),$line['amount']);
+            $entityManager->persist($newOrderLine);
+            $entityManager->flush();
+        }
+
 
         return $this->json([
             "message" => 'an order has been added with id: '.$order->getId(),

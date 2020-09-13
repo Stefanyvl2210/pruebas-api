@@ -34,10 +34,7 @@ class Cake
      * @param $price
      */
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="cakes",cascade={"persist"})
-     */
-    private $order;
+
 
     public function __construct($type=null, $price=null)
     {
@@ -71,24 +68,6 @@ class Cake
     public function setPrice($price): self
     {
         $this->price = $price;
-    }
-
-
-
-    /**
-     * @return mixed
-     */
-    public function getOrder()
-    {
-        return $this->order;
-    }
-
-    /**
-     * @param mixed $order
-     */
-    public function setOrder($order): void
-    {
-        $this->order = $order;
     }
 
     public function update(array $json) : self

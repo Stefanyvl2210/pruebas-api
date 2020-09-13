@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\OrderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,23 +21,24 @@ class Order
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\OrderLine", inversedBy="order")
      */
-    private $number;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Cake", mappedBy="order")
-     */
-    private $cakes;
+    private $lines;
 
     /**
      * Order constructor.
-     * @param $number
      */
-    public function __construct($number=null)
+    public function __construct()
     {
-        $this->number = $number;
-        $this->cakes = new ArrayCollection();
+        $this->lines = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection|App\Entity\OrderLine[]
+     */
+    public function getLines(): Collection
+    {
+        return $this->lines;
     }
 
 
@@ -45,24 +47,4 @@ class Order
         return $this->id;
     }
 
-    public function getNumber(): ?int
-    {
-        return $this->number;
-    }
-
-    public function setNumber(int $number): self
-    {
-        $this->number = $number;
-
-        return $this;
-    }
-
-    public function addCake(Cake $cake){
-        $this->cakes[] = $cake;
-    }
-    public function update(array $json) : self
-    {
-        $this->number = (isset($json['number'])) ? $json['number'] : $this->number;
-        return $this;
-    }
 }
